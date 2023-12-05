@@ -14,16 +14,6 @@ def load_data():
     return data    
 
 
-
-def find_signs(data):
-    unique=[]
-    for i in range(len(data)):
-        for j in range(len(data[i])):
-            if data[i][j] not in ["1","2","3","4","5","6","7","8","9","0","."] and data[i][j] not in unique:
-                unique.append(data[i][j])
-    return unique
-
-
 def find_coordinates(data,signs):
     coordinates=[]
     for i in range(len(data)):
@@ -61,7 +51,7 @@ def neighbors(coordinate,data):
     numbers=["1","2","3","4","5","6","7","8","9","0"]
     neighbors=[]
     found=[False,False,False,False]
-   
+    
     for i in [-1,1]:
         for j in [-1,1]:
             if data[y+i][x+j] in numbers:
@@ -100,8 +90,6 @@ def neighbors(coordinate,data):
             if number != "":
                     if number not in neighbors[-10:]:
                      neighbors.append(number) 
-            
-
     #print(neighbors)
     return neighbors
 
@@ -111,22 +99,21 @@ def find_numbers(data,coordinates):
     for i in range(len(coordinates)):
         #check all neighbors
         neighbors_list = neighbors(coordinates[i],data)
-        if len(neighbors_list)>0:
-            for n in neighbors_list:
-                numbers.append(n)
+        if len(neighbors_list)==2:
+            numbers.append(neighbors_list)
     return numbers
 
 
 
 
-
-
-
 data = load_data()
-signs = find_signs(data)
+signs = ["*"]
+
+all_numbers=[]
 coordinates = find_coordinates(data,signs)
 numbers = find_numbers(data,coordinates)
+mult = []
 for i in range(len(numbers)):
-    numbers[i] = int(numbers[i])
-print(sum(numbers))
+    mult.append(int(numbers[i][0])*int(numbers[i][1]))
+print(sum(mult))
 
