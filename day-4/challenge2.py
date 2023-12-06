@@ -42,15 +42,14 @@ total_values,count = check_win(winning_numbers, scratch_numbers)
 
 scratches={}
 for i in range(len(count)):
+    scratches[i]=0
+
+for i in range(len(count)):
     if i in scratches:
         scratches[i]+=1
-    else:
-        scratches[i]=1
-    for j in range(i+1,i+count[i]):
-        if j in scratches:
-            scratches[j]+=scratches[i]
-        else:
-            scratches[j]=scratches[i]
+    for j in range(0,count[i]):
+        if i+j+1 in scratches:
+            scratches[i+j+1]+=scratches[i]
 
 
 
